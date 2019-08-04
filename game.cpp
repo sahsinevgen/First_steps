@@ -139,7 +139,7 @@ void game::turn(int xy) {
     if (is_win(false))
         win = now;
     now = (now + 1) % 2;
-    if (++cnt_turn == n * m)
+    if (++cnt_turn == n * m && win == -1)
         win = 2;
     emit send_text(current_text());
 }

@@ -50,7 +50,7 @@ public:
         pb_option->setGeometry(QRect(280, 190, 89, 25));
         label = new QLabel(centralWidget);
         label->setObjectName(QStringLiteral("label"));
-        label->setGeometry(QRect(100, 20, 181, 31));
+        label->setGeometry(QRect(90, 20, 181, 31));
         QFont font;
         font.setPointSize(15);
         font.setBold(true);

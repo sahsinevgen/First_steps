@@ -46,6 +46,8 @@ public:
         textEdit_2 = new QTextEdit(settings);
         textEdit_2->setObjectName(QStringLiteral("textEdit_2"));
         textEdit_2->setGeometry(QRect(70, 10, 111, 31));
+        textEdit_2->setAutoFillBackground(true);
+        textEdit_2->setReadOnly(true);
         textEdit_3 = new QTextEdit(settings);
         textEdit_3->setObjectName(QStringLiteral("textEdit_3"));
         textEdit_3->setGeometry(QRect(70, 50, 111, 31));
