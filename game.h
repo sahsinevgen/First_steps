@@ -1,6 +1,8 @@
 #ifndef GAME_H
 #define GAME_H
 
+//#include "computer.h"
+
 #include <QObject>
 #include <QVector>
 #include <QPushButton>
@@ -18,6 +20,8 @@ private:
     int start_now, now, win;
     int n = 0, m = 0, len;
     int cnt_turn = 0;
+    int direction_x[4] = {1, 1, 0, -1};
+    int direction_y[4] = {0, -1, -1, -1};
 
 public:
     explicit game(QObject *parent = nullptr);

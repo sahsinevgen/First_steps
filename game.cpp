@@ -6,97 +6,40 @@ game::game(QObject *parent) : QObject(parent) {
 
 bool game::is_win(bool only_check = true) {
     bool res = false;
-    for (int i = 0; i < n; i++)
-        for (int j = 0; j < m - len + 1; j++) {
-            int cnt = 0;
-            for (int k = 0; k < len; k++) {
-                int sign = field[i][j + k];
-                if (sign == -1) {
-                    cnt = -1;
-                    break;
-                }
-                if (sign == 1)
-                    cnt++;
-            }
-            if (cnt == 0 || cnt == len) {
-                if (only_check)
-                    return true;
-                for (int k = 0; k < len; k++) {
-                    field_it[i][j + k]->setStyleSheet("background-color : red");
-                }
-                res = true;
-            }
-        }
+    for (int x = 0; x < n; x++) {
+        for (int y = 0; y < m; y++) {
+            for (int type = 0; type < 4; type++) {
 
-    for (int i = 0; i < n - len + 1; i++)
-        for (int j = 0; j < m; j++) {
-            int cnt = 0;
-            for (int k = 0; k < len; k++) {
-                int sign = field[i + k][j];
-                if (sign == -1) {
-                    cnt = -1;
-                    break;
+                int dx = direction_x[type];
+                int dy = direction_y[type];
+                if (x + dx * (len - 1) < 0 || x + dx * (len - 1) >= n ||
+                    y + dy * (len - 1) < 0 || y + dy * (len - 1) >= m) {
+                    continue;
                 }
-                if (sign == 1)
-                    cnt++;
-            }
-            if (cnt == 0 || cnt == len) {
-                if (only_check)
-                    return true;
-                for (int k = 0; k < len; k++) {
-                    field_it[i + k][j]->setStyleSheet("background-color : red");
-                }
-                res = true;
-            }
-        }
 
-    for (int i = 0; i < n; i++)
-        for (int j = 0; j < m; j++) {
-            if (i + len - 1 >= n || j + len - 1 >= m)
-                break;
-            int cnt = 0;
-            for (int k = 0; k < len; k++) {
-                int sign = field[i + k][j + k];
-                if (sign == -1) {
-                    cnt = -1;
-                    break;
-                }
-                if (sign == 1)
-                    cnt++;
-            }
-            if (cnt == 0 || cnt == len) {
-                if (only_check)
-                    return true;
+                int cnt = 0;
                 for (int k = 0; k < len; k++) {
-                    field_it[i + k][j + k]->setStyleSheet("background-color : red");
+                    int sign = field[x + dx * k][y + dy * k];
+                    if (sign == -1) {
+                        cnt = -1;
+                        break;
+                    }
+                    if (sign == 1) {
+                        cnt++;
+                    }
                 }
-                res = true;
+                if (cnt == 0 || cnt == len) {
+                    if (only_check) {
+                        return true;
+                    }
+                    for (int k = 0; k < len; k++) {
+                        field_it[x + dx * k][y + dy * k]->setStyleSheet("background-color : red");
+                    }
+                    res = true;
+                }
             }
         }
-
-    for (int i = 0; i < n; i++)
-        for (int j = 0; j < m; j++) {
-            if (i - len + 1 < 0 || j + len - 1 >= m)
-                break;
-            int cnt = 0;
-            for (int k = 0; k < len; k++) {
-                int sign = field[i - k][j + k];
-                if (sign == -1) {
-                    cnt = -1;
-                    break;
-                }
-                if (sign == 1)
-                    cnt++;
-            }
-            if (cnt == 0 || cnt == len) {
-                if (only_check)
-                    return true;
-                for (int k = 0; k < len; k++) {
-                    field_it[i - k][j + k]->setStyleSheet("background-color : red");
-                }
-                res = true;
-            }
-        }
+    }
     return res;
 } // is_win
 
@@ -116,7 +59,7 @@ QString game::current_text() {
 }
 
 void game::turn(int xy) {
-    if (win!=-1) {
+    if (win != -1) {
 
         return ;
     }
@@ -138,9 +81,12 @@ void game::turn(int xy) {
     }
     if (is_win(false))
         win = now;
-    now = (now + 1) % 2;
+    now = (now + 1) % 2; // = now == WinXState ? WinOState : WinXState
     if (++cnt_turn == n * m && win == -1)
         win = 2;
+    if (with_comp) {
+
+    }
     emit send_text(current_text());
 }
 

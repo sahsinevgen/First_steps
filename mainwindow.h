@@ -1,14 +1,15 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "game.h"
 #include "settings.h"
+
 #include <QMainWindow>
 #include <QVector>
 #include <QSignalMapper>
 #include <QLabel>
 #include <QPair>
 #include <QtGlobal>
-#include "game.h"
 
 namespace Ui {
     class MainWindow;

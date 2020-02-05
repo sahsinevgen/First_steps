@@ -7,6 +7,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     logic = new game();
+    //computer* x = new computer;
+    //x->f(qint32(1), qint32(2));
     change_settings();
     connect(ui->pb_restart, SIGNAL(clicked(bool)), logic, SLOT(restart()));
     connect(ui->pb_option, SIGNAL(clicked(bool)), this, SLOT(change_settings()));
@@ -50,5 +52,7 @@ void MainWindow::change_settings() {
 }
 
 MainWindow::~MainWindow() {
+    delete mapper;
+    delete logic;
     delete ui;
 }
